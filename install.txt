@@ -1,0 +1,9 @@
+
+$ sudo apt install git
+$ git clone https://github.com/sepi/rafthercal.git
+# install cups printer driver zj-58
+# setup google secrets by putting 'credentials.json' into this directory
+$ sudo apt install imagemagic
+$ pip install --upgrade Adafruit-Themal google-api-python-client google-auth-httplib2 google-auth-oauthlib todoist-python dateutil-python
+# configure by editing config.py: putting your todoist key in there
+# setup cronjob: crontab -e: 0 7 * * 1-5 /home/pi/rafthercal/run.sh
