@@ -1,5 +1,12 @@
 from __future__ import print_function
 
+from Adafruit_Thermal import *
+
+import config
+
+from datetime import datetime, timedelta
+import dateutil.parser
+import pickle
 import os.path
 
 from google.auth.transport.requests import Request
@@ -8,21 +15,12 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-# If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/tasks.readonly']
 
-
 def main():
-    """Shows basic usage of the Tasks API.
-    Prints the title and ID of the first 10 task lists.
-    """
     creds = None
-    # The file token.json stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
     if os.path.exists('token.json'):
         creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-    # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
@@ -37,23 +35,45 @@ def main():
     try:
         service = build('tasks', 'v1', credentials=creds)
 
-        # Call the Tasks API
         tasklists = service.tasklists().list(maxResults=10).execute().get('items', [])
 
-        if not tasklists:
-            print('No task lists found.')
-            return
+        p = Adafruit_Thermal()
+        p.setDefault()
+        p.setSize('M')
+	p.justify('C')
 
-        print('Task lists:')
+        if not tasklists:
+            p.println('No task lists found.')
+            return
+        else:
+            p.println('Tasks')
+
+	p.setSize('S')
+
+#        print('Task lists:')
         for tasklist in tasklists:
-            print(u'{0} ({1})'.format(tasklist['title'], tasklist['id']))
+#            print(u'{0} ({1})'.format(tasklist['title'], tasklist['id']))
 
             tasks = service.tasks().list(tasklist=tasklist['id']).execute().get('items', [])
             for task in sorted(tasks, key=lambda t: t.get('order', '')):
-                print("  ",
-                      task.get('title', None),
-                      task['status'],
-                      task.get('due', None), "\n")
+		task_title = task.get('title', '-')
+		task_status = task.get('status', None)
+		task_due = task.get('due', None)
+
+		if task_due is not None:
+		    task_due_s = dateutil.parser.parse(task_due).strftime(config.date_format)
+                    p.boldOn()
+                    p.underlineOn()
+ 		    p.justify('R')
+                    p.println(task_due_s)
+
+		p.boldOff()
+                p.underlineOff()
+                p.justify('L')
+		p.print('[ ] ')
+
+                p.println(task_title)
+        p.println('') # make some space
 
     except HttpError as err:
         print(err)

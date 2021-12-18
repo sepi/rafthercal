@@ -14,7 +14,8 @@ SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 def main():
   p = Adafruit_Thermal()
   p.setDefault()
-  p.setSize('L')
+  p.setSize('M')
+  p.justify('C')
   p.println('Calendar')
 
   creds = None
@@ -38,7 +39,7 @@ def main():
   event_results = service.events().list(calendarId='primary', timeMin=now, timeMax=timeMax, singleEvents=True, orderBy='startTime').execute()
   events = event_results.get('items', [])
 
-  p.setSize('M')
+  p.setSize('S')
   if not events:
     p.println("Nothing to do... chill out!")
 
@@ -57,7 +58,7 @@ def main():
 
     p.boldOn()
     p.underlineOn()
-    p.justify('L')
+    p.justify('R')
     if start_t_out is not None:
       p.print(start_t_out)
       p.print(' ')
@@ -66,7 +67,7 @@ def main():
     p.boldOff()
     p.underlineOff()
 
-    p.justify('R')
+    p.justify('L')
     p.println(event['summary'])
 
   p.setDefault()
