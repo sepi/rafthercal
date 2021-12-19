@@ -7,5 +7,5 @@ python google_tasks.py | lp -o raw
 # Calendar
 python google_cal.py | lp -o raw
 # Fortune cookie
-fortune -s | cowsay -W 29 | lp -o raw
+#fortune -s | cowsay -W 29 | lp -o raw
 echo | lp
