@@ -14,30 +14,32 @@ p.setSize('L')
 p.println('Todo')
 
 for i in api.items.all():
-  #print(i)
+    # print(i)
 
-  date_str = i['due']
-  if date_str: date_str = date_str['date']
-  if date_str:
-    due_date = dateutil.parser.parse(date_str)
-  else:
-    due_date = None
+    date_str = i['due']
+    if date_str:
+        date_str = date_str['date']
+    if date_str:
+        due_date = dateutil.parser.parse(date_str)
+    else:
+        due_date = None
 
-  p.boldOn()
-  p.underlineOn()
-  p.justify('L')
-  p.print('[ ] ')
-  if due_date:
-    p.println(due_date.strftime(config.date_format))
-  else:
-    p.println('')
+    p.boldOn()
+    p.underlineOn()
+    p.justify('L')
+    p.print('[ ] ')
+    if due_date:
+        p.println(due_date.strftime(config.date_format))
+    else:
+        p.println('')
 
-  p.boldOff()
-  p.underlineOff()
+    p.boldOff()
+    p.underlineOff()
 
-  p.justify('R')
+    p.justify('R')
 
-  content = unicodedata.normalize('NFD', i['content']).encode('ascii', 'ignore')
-  p.println(content)
+    content = unicodedata.normalize(
+        'NFD', i['content']).encode('ascii', 'ignore')
+    p.println(content)
 
-  #print(i['content'], i['date_completed'], due_date)
+    #print(i['content'], i['date_completed'], due_date)

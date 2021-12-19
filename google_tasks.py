@@ -48,7 +48,8 @@ def main():
         for tasklist in tasklists:
             print(u'{0} ({1})'.format(tasklist['title'], tasklist['id']))
 
-            tasks = service.tasks().list(tasklist=tasklist['id']).execute().get('items', [])
+            tasks = service.tasks().list(
+                tasklist=tasklist['id']).execute().get('items', [])
             for task in sorted(tasks, key=lambda t: t.get('order', '')):
                 print("  ",
                       task.get('title', None),
@@ -58,6 +59,6 @@ def main():
     except HttpError as err:
         print(err)
 
+
 if __name__ == '__main__':
     main()
-

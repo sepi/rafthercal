@@ -4,4 +4,3 @@ time_format = '%H:%m'
 calendar_days = 10
 
 todoist_token = 'PUT TOKEN HERE'
-
