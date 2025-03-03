@@ -1,0 +1,9 @@
+{% extends "base.rml" %}
+{# See https://docs.pathcore.com/flow/manual/v3.4/docs/report-templates/jinja2-quick-reference/ for jinja2 template reference #}
+{# See https://www.sccs.swarthmore.edu/users/12/abiele1/RML/ for syntax of RML. #}
+{% block content %}
+{% include "header.rml" %}
+{% include "calendar.rml" %}
+{{ line }}
+{% include "footer.rml" %}
+{% endblock %}

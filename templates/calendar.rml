@@ -1,0 +1,14 @@
+{% for d in calendar_days %}
+  {% if d.events %}
+{b}{{ d.date.strftime("%a %-d %B") }}{/b}
+    {% for e in d.events %}
+      {b}{{ e.summary }}{/b}
+      {% if e.location %}
+@{{ e.location }}
+      {% endif %}
+      {% if e.description %}
+{i}{{ e.description }}{/i}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}

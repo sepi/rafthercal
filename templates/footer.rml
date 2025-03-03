@@ -1,0 +1,3 @@
+Printed on {{ today }} at {{ now.strftime("%H:%M") }}.
+{{ user }}@{{ hostname }} on {{ os }}.
+
