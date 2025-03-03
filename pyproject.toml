@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rafthercal"
+version = "0.1.0"
+authors = [
+  { name="Raffael Mancini", email="raffael@mancini.lu" },
+]
+description = "A framework to print useful stuff on thermal printers."
+requires-python = ">=3.8"
+classifiers = []
+dependencies = ["jinja2", "caldav", "rml @ git+https://github.com/sepi/RML"]
+
+[project.urls]
+Homepage = "https://github.com/sepi/rafthercal"
+
+[project.scripts]
+rafthercal = "rafthercal.rafthercal:main"
