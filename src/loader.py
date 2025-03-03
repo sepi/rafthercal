@@ -9,7 +9,7 @@ def my_import(name):
 
 def load_plugin_classes():
     plugin_classes = {}
-    for mod_class_name in config.PLUGIN_CLASSES:
+    for mod_class_name in config.RAFTHERCAL_PLUGIN_CLASSES:
         klass = my_import(mod_class_name)
         plugin_classes[mod_class_name] = klass
     return plugin_classes

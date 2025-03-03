@@ -1,7 +1,9 @@
-PLUGIN_CLASSES = [
+RAFTHERCAL_PLUGIN_CLASSES = [
     'calendar_plugin.CalendarPlugin',
     'owner_plugin.OwnerPlugin',
 ]
+RAFTHERCAL_MAIN_TEMPLATE = "main.rml"
+RAFTHERCAL_SERIAL_DEVICE = "/dev/ttyS0"
 
 OWNER_NAME = "Fooman Barguy"
 
