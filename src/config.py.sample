@@ -6,6 +6,7 @@ RAFTHERCAL_MAIN_TEMPLATE = "main.rml"
 RAFTHERCAL_SERIAL_DEVICE = "/dev/ttyS0"
 
 OWNER_NAME = "Fooman Barguy"
+OWNER_BIRTHDAY = "1970-01-01"
 
 CALDAV_URL = "https://dav.mailbox.org/caldav/XXXXXXX"
 CALDAV_USERNAME = "user@mailbox.org"
