@@ -1,9 +1,11 @@
-RAFTHERCAL_PLUGIN_CLASSES = [
-    'calendar_plugin.CalendarPlugin',
-    'owner_plugin.OwnerPlugin',
-]
 RAFTHERCAL_MAIN_TEMPLATE = "main.rml"
 RAFTHERCAL_SERIAL_DEVICE = "/dev/ttyS0"
+RAFTHERCAL_PLUGIN_CLASSES = [
+    'system_plugin.SystemPlugin',
+    'calendar_plugin.CalendarPlugin',
+    'owner_plugin.OwnerPlugin',
+    'image_plugin.ImagePlugin',
+]
 
 OWNER_NAME = "Fooman Barguy"
 OWNER_BIRTHDAY = "1970-01-01"
@@ -13,3 +15,10 @@ CALDAV_USERNAME = "user@mailbox.org"
 CALDAV_PASSWORD = ""
 CALDAV_CALENDAR_NAME = "Kalender"
 CALDAV_CALENDAR_DAYS = 4
+
+IMAGE_URL = "https://www.theweather.com/wimages/foto3c0142c5f2f6287ab38d28f989a419d4.png"
+IMAGE_OUTPUT_PATH = "/tmp/weather.png"
+#IMAGE_CROP_TOP = 0
+#IMAGE_CROP_LEFT = 0
+#IMAGE_CROP_RIGHT = 50
+#IMAGE_CROP_BOTTOM = 200

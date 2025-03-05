@@ -2,7 +2,7 @@ import sys
 from  datetime import date, datetime
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-from rml.rml import print_from_str
+from rml import print_from_str
 
 from loader import load_plugin_classes
 import config
@@ -11,7 +11,8 @@ def load_context():
     base_context = {
         'today': date.today(),
         'now': datetime.now().time(),
-        'line': "----------------------------",
+        'line_width': 32,
+        'line': "-" * 32,
     }
 
     plugin_classes = load_plugin_classes()

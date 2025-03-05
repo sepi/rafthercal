@@ -5,5 +5,7 @@
 {% include "header.rml" %}
 {% include "calendar.rml" %}
 {{ line }}
+{{ image_path }}
+{{ image }}
 {% include "footer.rml" %}
 {% endblock %}
