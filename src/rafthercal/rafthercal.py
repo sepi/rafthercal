@@ -2,7 +2,8 @@ import sys
 from  datetime import date, datetime
 
 from jinja2 import Environment, ChoiceLoader, PackageLoader, FileSystemLoader, select_autoescape
-from rml import print_from_str
+from rml.rml import print_from_str
+from rml.simulate import simulate_print
 
 from rafthercal.loader import load_plugin_classes
 import config
@@ -38,11 +39,17 @@ def load_main_template():
     template = jinja_env.get_template(config.RAFTHERCAL_MAIN_TEMPLATE)
     return template
 
-def main():
+def main(simulate=False):
     context = load_context()
     template = load_main_template()
-    out_str = template.render(context)
-    print_from_str(out_str, config.RAFTHERCAL_SERIAL_DEVICE or sys.stdout)
+    rml_str = template.render(context)
+    out_file = config.RAFTHERCAL_SERIAL_DEVICE or sys.stdout
+    if simulate:
+        import io
+        out_file = io.BytesIO()
+    print_from_str(rml_str, out_file)
+    if simulate:
+        simulate_print(out_file)
 
 if __name__ == '__main__':
     main()

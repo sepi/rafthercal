@@ -1,3 +1,4 @@
 jinja2
 caldav
 rml @ git+https://github.com/sepi/RML
+pillow
