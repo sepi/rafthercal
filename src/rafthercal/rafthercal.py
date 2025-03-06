@@ -1,10 +1,10 @@
 import sys
 from  datetime import date, datetime
 
-from jinja2 import Environment, FileSystemLoader, select_autoescape
+from jinja2 import Environment, ChoiceLoader, PackageLoader, FileSystemLoader, select_autoescape
 from rml import print_from_str
 
-from loader import load_plugin_classes
+from rafthercal.loader import load_plugin_classes
 import config
 
 def load_context():
@@ -27,7 +27,9 @@ def load_context():
 
 def load_main_template():
     jinja_env = Environment(
-        loader=FileSystemLoader("templates"),
+        loader=ChoiceLoader([FileSystemLoader("templates"),
+                             PackageLoader("rafthercal", "templates")
+                             ]),
         autoescape=select_autoescape(),
         trim_blocks=True,
         lstrip_blocks=True,

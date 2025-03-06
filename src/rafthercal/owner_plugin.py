@@ -1,6 +1,6 @@
 from datetime import date
 
-from plugin import BasePlugin
+from rafthercal.plugin import BasePlugin
 
 class OwnerPlugin(BasePlugin):
     def get_context(self):

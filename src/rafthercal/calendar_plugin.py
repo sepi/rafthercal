@@ -1,7 +1,8 @@
-from plugin import BasePlugin
-
 import datetime
+
 import caldav
+
+from rafthercal.plugin import BasePlugin
 
 def find_calendar(cals, name):
     return list(filter(lambda c: c.name == name, cals))[0]
@@ -28,8 +29,8 @@ def get_events(config):
                 dtend = e.icalendar_component['DTEND']
                 ev = {
                     'summary': e.icalendar_component['SUMMARY'],
-                    'location': e.icalendar_component['LOCATION'],
-                    'description': e.icalendar_component['DESCRIPTION'],
+                    'location': getattr(e.icalendar_component, 'LOCATION', None),
+                    'description': getattr(e.icalendar_component, 'DESCRIPTION', None),
                     'dtstart': dtstart.dt,
                     'dtend': dtend.dt,
                 }

@@ -1,7 +1,7 @@
 import os
 import platform
 
-from plugin import BasePlugin
+from rafthercal.plugin import BasePlugin
 
 class SystemPlugin(BasePlugin):
     def get_context(self):

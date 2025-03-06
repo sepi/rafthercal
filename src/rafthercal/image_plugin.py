@@ -2,7 +2,7 @@ import requests
 from PIL import Image
 from io import BytesIO
 
-from plugin import BasePlugin
+from rafthercal.plugin import BasePlugin
 
 class ImagePlugin(BasePlugin):
     def get_context(self):
