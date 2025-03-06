@@ -47,7 +47,11 @@ def main(simulate=False):
     if simulate:
         import io
         out_file = io.BytesIO()
-    print_from_str(rml_str, out_file)
+        print_from_str(rml_str, out_file)
+    else:
+        # The printer eats CP437 by default
+        rml_cp437 = rml_str.encode('CP437')
+        print_from_str(rml_cp437, out_file)
     if simulate:
         simulate_print(out_file)
 
