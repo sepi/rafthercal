@@ -4,6 +4,20 @@ import caldav
 
 from rafthercal.plugin import BasePlugin
 
+def fill_event(component):
+    return {
+        'summary': component.get("summary"),
+        'description': component.get("description"),
+        'dtstart': component.get("dtstart").dt,
+        'dtend': component.get("dtend").dt,
+        'location': component.get("location"),
+    }
+
+def extract_ev(event):
+    for component in event.icalendar_instance.walk():
+        if component.name == "VEVENT":
+            return fill_event(component)
+
 def find_calendar(cals, name):
     return list(filter(lambda c: c.name == name, cals))[0]
 
@@ -24,21 +38,9 @@ def get_events(config):
 
             day = {'date': period_start}
             events = []
-            for e in events_today:
-                dtstart = e.icalendar_component['DTSTART']
-                dtend = e.icalendar_component['DTEND']
-                ev = {
-                    'summary': e.icalendar_component['SUMMARY'],
-                    'location': getattr(e.icalendar_component, 'LOCATION', None),
-                    'description': getattr(e.icalendar_component, 'DESCRIPTION', None),
-                    'dtstart': dtstart.dt,
-                    'dtend': dtend.dt,
-                }
-                if getattr(dtstart.dt, 'time', False):
-                    ev['tstart'] = dtstart.dt.time()
-                if getattr(dtend.dt, 'time', False):
-                    ev['tend'] = dtend.dt.time()
-                events.append(ev)
+            for event in events_today:
+                event_data = extract_ev(event)
+                events.append(event_data)
             day['events'] = events
             days.append(day)
     return days
