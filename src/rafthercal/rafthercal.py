@@ -13,7 +13,8 @@ def load_context():
         'today': date.today(),
         'now': datetime.now().time(),
         'line_width': 32,
-        'line': "-" * 32,
+        'line_single': "─" * 32,
+        'line_double': "═" * 32,
     }
 
     plugin_classes = load_plugin_classes()
