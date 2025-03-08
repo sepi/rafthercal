@@ -53,5 +53,11 @@ def main():
     if config.RAFTHERCAL_SIMULATE:
         simulate_print(out_file)
 
+def button_loop():
+    from gpiozero import Button
+    button = Button(config.RAFTHERCAL_BUTTON_PIN)
+    while button.wait_for_press():
+        main()
+
 if __name__ == '__main__':
     main()

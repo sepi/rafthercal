@@ -12,7 +12,7 @@ description = "A framework to print useful stuff on thermal printers."
 requires-python = ">=3.8"
 classifiers = []
 dependencies = ["jinja2", "caldav", "rml @ git+https://github.com/sepi/RML",
-	        "pillow"]
+	        "pillow", "gpiozero"]
 
 [project.urls]
 Homepage = "https://github.com/sepi/rafthercal"

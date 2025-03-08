@@ -12,6 +12,10 @@ charset-normalizer==3.4.1
     # via requests
 click==8.1.8
     # via x-wr-timezone
+colorzero==2.0
+    # via gpiozero
+gpiozero==2.0.1
+    # via -r requirements.in
 icalendar==6.1.1
     # via
     #   caldav
@@ -26,7 +30,9 @@ lxml==5.3.1
 markupsafe==3.0.2
     # via jinja2
 pillow==11.1.0
-    # via rml
+    # via
+    #   -r requirements.in
+    #   rml
 pyserial==3.5
     # via rml
 python-dateutil==2.9.0.post0
@@ -57,3 +63,6 @@ vobject==0.9.9
     # via caldav
 x-wr-timezone==2.0.1
     # via recurring-ical-events
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools
