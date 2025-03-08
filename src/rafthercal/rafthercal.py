@@ -39,19 +39,18 @@ def load_main_template():
     template = jinja_env.get_template(config.RAFTHERCAL_MAIN_TEMPLATE)
     return template
 
-def main(simulate=False):
+def main():
     context = load_context()
     template = load_main_template()
     rml_str = template.render(context)
     out_file = config.RAFTHERCAL_SERIAL_DEVICE or sys.stdout
-    if simulate:
+    if config.RAFTHERCAL_SIMULATE:
         import io
         out_file = io.BytesIO()
-        print_from_str(rml_str, out_file)
 
     print_from_str(rml_str, out_file)
 
-    if simulate:
+    if config.RAFTHERCAL_SIMULATE:
         simulate_print(out_file)
 
 if __name__ == '__main__':

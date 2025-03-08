@@ -1,5 +1,6 @@
 RAFTHERCAL_MAIN_TEMPLATE = "main.rml"
 RAFTHERCAL_SERIAL_DEVICE = "/dev/ttyS0"
+RAFTHERCAL_SIMULATE = False
 RAFTHERCAL_PLUGIN_CLASSES = [
     'system_plugin.SystemPlugin',
     'calendar_plugin.CalendarPlugin',
