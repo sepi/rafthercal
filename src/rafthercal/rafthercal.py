@@ -57,7 +57,10 @@ def button_loop():
     from gpiozero import Button
     button = Button(config.RAFTHERCAL_BUTTON_PIN)
     while button.wait_for_press():
-        main()
+        try:
+            main()
+        except Exception as e:
+            print("A problem occured, ignoring: ", e)
 
 if __name__ == '__main__':
     main()
