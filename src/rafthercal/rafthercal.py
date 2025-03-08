@@ -58,7 +58,9 @@ def button_loop():
     button = Button(config.RAFTHERCAL_BUTTON_PIN)
     while button.wait_for_press():
         try:
+            print("Printing")
             main()
+            print(f"Waiting for button press connected to pin {config.RAFTHERCAL_BUTTON_PIN}")
         except Exception as e:
             print("A problem occured, ignoring: ", e)
 
