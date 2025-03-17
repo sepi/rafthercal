@@ -43,16 +43,21 @@ def load_main_template():
 def main():
     context = load_context()
     template = load_main_template()
+
     rml_str = template.render(context)
-    out_file = config.RAFTHERCAL_SERIAL_DEVICE or sys.stdout
-    if config.RAFTHERCAL_SIMULATE:
-        import io
-        out_file = io.BytesIO()
-
-    print_from_str(rml_str, out_file)
-
-    if config.RAFTHERCAL_SIMULATE:
-        simulate_print(out_file)
+    PRINT_RML_ONLY = getattr(config, 'RAFTHERCAL_PRINT_RML_ONLY', False)
+    if PRINT_RML_ONLY:
+        print(rml_str)
+    else:
+        out_file = config.RAFTHERCAL_SERIAL_DEVICE or sys.stdout
+        if config.RAFTHERCAL_SIMULATE:
+            import io
+            out_file = io.BytesIO()
+    
+        print_from_str(rml_str, out_file)
+    
+        if config.RAFTHERCAL_SIMULATE:
+            simulate_print(out_file)
 
 def button_loop():
     from gpiozero import Button
