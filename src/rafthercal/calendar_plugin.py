@@ -41,8 +41,9 @@ def get_events(config):
                 event_data = extract_ev(event)
                 events.append(event_data)
 
-            days.append({'date': period_start,
-                         'events': events})
+            if events:
+                days.append({'date': period_start,
+                             'events': events})
     return days
 
 
