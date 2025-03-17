@@ -36,13 +36,13 @@ def get_events(config):
             period_end = period_start + datetime.timedelta(days=1)
             events_today = c.date_search(start=period_start, end=period_end)
 
-            day = {'date': period_start}
             events = []
             for event in events_today:
                 event_data = extract_ev(event)
                 events.append(event_data)
-            day['events'] = events
-            days.append(day)
+
+            days.append({'date': period_start,
+                         'events': events})
     return days
 
 
