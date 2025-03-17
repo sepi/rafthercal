@@ -1,4 +1,3 @@
 #!/bin/sh
-. venv/bin/activate
-python3 -m pip install --reinstall rafthercal
+python3 -m pip install --force-reinstall git+https://github.com/sepi/rafthercal
 
