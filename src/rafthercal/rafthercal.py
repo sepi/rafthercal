@@ -57,11 +57,13 @@ def main():
 def button_loop():
     from gpiozero import Button
     button = Button(config.RAFTHERCAL_BUTTON_PIN)
+    wait_message = f"Waiting for button press connected to pin {config.RAFTHERCAL_BUTTON_PIN}"
+    print(wait_message)
     while button.wait_for_press():
         try:
             print("Printing")
             main()
-            print(f"Waiting for button press connected to pin {config.RAFTHERCAL_BUTTON_PIN}")
+            print(wait_message)
         except Exception as e:
             print("A problem occured, ignoring: ", e)
 
