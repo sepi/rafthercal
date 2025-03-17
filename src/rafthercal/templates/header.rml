@@ -1,2 +1,2 @@
-~PRINTI~
-{style tall}Calendar for  {b}{{ owner_name }}{/b} on {{ today }}{style}
+{style tall}{b}{{ owner_name }}{/b} on {{ today }}{style}
+

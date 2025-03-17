@@ -9,6 +9,8 @@
       {% if e.description %}
 {i}{{ e.description }}{/i}
       {% endif %}
+      {% if not loop.last %}{{ line_single }}
+      {% endif %}
     {% endfor %}
   {% endif %}
 {% endfor %}
