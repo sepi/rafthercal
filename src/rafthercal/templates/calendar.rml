@@ -1,16 +1,20 @@
-{% for d in calendar_days %}
-  {% if d.events %}
+{% if calendar_days %}
+  {% for d in calendar_days %}
+    {% if d.events %}
 {b}{{ d.date.strftime("%a %-d %B") }}{/b}
-    {% for e in d.events %}
-      {b}{{ e.summary }}{/b}
-      {% if e.location %}
+      {% for e in d.events %}
+{b}{{ e.summary }}{/b}
+        {% if e.location %}
 @{{ e.location }}
-      {% endif %}
-      {% if e.description %}
+        {% endif %}
+        {% if e.description %}
 {i}{{ e.description }}{/i}
-      {% endif %}
-      {% if not loop.last %}{{ line_single }}
-      {% endif %}
-    {% endfor %}
-  {% endif %}
-{% endfor %}
+        {% endif %}
+        {% if not loop.last %}
+{{ line_single }}{% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+{% else %}
+No calendar events
+{% end %}
