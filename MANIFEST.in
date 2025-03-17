@@ -1,1 +1,2 @@
 graft src/rafthercal/templates
+graft scripts
