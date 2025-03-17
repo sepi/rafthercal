@@ -23,5 +23,5 @@ class ImagePlugin(BasePlugin):
         resized_img.save(c.IMAGE_OUTPUT_PATH)
 
         return {
-            'image': "{ image " + c.IMAGE_OUTPUT_PATH + "}",
+            'image': "{ image " + c.IMAGE_OUTPUT_PATH + " }",
         }
