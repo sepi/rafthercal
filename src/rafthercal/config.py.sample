@@ -5,6 +5,7 @@ RAFTHERCAL_SIMULATE = False
 RAFTHERCAL_PLUGIN_CLASSES = [
     'system_plugin.SystemPlugin',
     'calendar_plugin.CalendarPlugin',
+    'rafthercal.todo_plugin.TodoPlugin',
     'owner_plugin.OwnerPlugin',
     'image_plugin.ImagePlugin',
 ]
@@ -16,6 +17,7 @@ CALDAV_URL = "https://dav.mailbox.org/caldav/XXXXXXX"
 CALDAV_USERNAME = "user@mailbox.org"
 CALDAV_PASSWORD = ""
 CALDAV_CALENDAR_NAME = "Kalender"
+CALDAV_TODO_NAME = "Aufgaben"
 CALDAV_CALENDAR_DAYS = 4
 
 IMAGE_URL = "https://www.theweather.com/wimages/foto3c0142c5f2f6287ab38d28f989a419d4.png"
