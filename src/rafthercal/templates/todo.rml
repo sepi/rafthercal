@@ -1,0 +1,8 @@
+{% for day in todos_duedate %}
+{b}{{ day.date.strftime("%a %-d %B") }}{/b}
+  {% for todo in day.todos %}
+[{% if todo.completed %}X{% else %} {% endif %}] {{ todo.summary }}
+  {% endfor %}
+  {% if not loop.last %}{{ line_single }}
+  {% endif %}
+{% endfor %}
