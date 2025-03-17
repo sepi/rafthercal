@@ -17,4 +17,4 @@
   {% endfor %}
 {% else %}
 No calendar events
-{% end %}
+{% endif %}
