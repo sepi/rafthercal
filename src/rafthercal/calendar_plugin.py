@@ -3,6 +3,7 @@ import datetime
 import caldav
 
 from rafthercal.plugin import BasePlugin
+from rafthercal.config_helpers import config_expand
 
 def fill_event(component):
     return {
@@ -13,37 +14,50 @@ def fill_event(component):
         'location': component.get("location"),
     }
 
+
 def extract_ev(event):
     for component in event.icalendar_instance.walk():
         if component.name == "VEVENT":
             return fill_event(component)
 
+
 def find_calendar(cals, name):
     return list(filter(lambda c: c.name == name, cals))[0]
+
 
 def get_events(config):
     today = datetime.date.today()
     days = []
-    with caldav.DAVClient(url=config.CALDAV_URL,
-                          username=config.CALDAV_USERNAME,
-                          password=config.CALDAV_PASSWORD) as client:
-        my_principal = client.principal()
-        calendars = my_principal.calendars()
-        c = find_calendar(calendars, config.CALDAV_CALENDAR_NAME)
-        days = []
-        for offset in range(config.CALDAV_CALENDAR_DAYS):
-            period_start = today + datetime.timedelta(days=offset)
-            period_end = period_start + datetime.timedelta(days=1)
-            events_today = c.date_search(start=period_start, end=period_end)
-
-            events = []
-            for event in events_today:
-                event_data = extract_ev(event)
-                events.append(event_data)
-
-            if events:
-                days.append({'date': period_start,
-                             'events': events})
+    config_expand(config)
+    for server in config.CALDAV_PLUGIN['servers']:
+        with caldav.DAVClient(url=server['url'],
+                              username=server['username'],
+                              password=server['password']) as client:
+            my_principal = client.principal()
+            calendars = my_principal.calendars()
+            for calendar in config.CALDAV_PLUGIN['calendars']:
+                if calendar['server'] != server['id']:
+                    continue # Only consider calendars on this server
+                calendar_name = calendar['caldav_name']
+                c = find_calendar(calendars, calendar_name)
+                days = []
+                for offset in range(calendar['days']):
+                    period_start = datetime.datetime.combine(today + datetime.timedelta(days=offset),
+                                                             datetime.datetime.min.time())
+                    period_end = datetime.datetime.combine(period_start + datetime.timedelta(days=1),
+                                                           datetime.datetime.min.time())
+                    events_today = c.date_search(start=period_start, end=period_end)
+        
+                    events = []
+                    for event in events_today:
+                        event_data = extract_ev(event)
+                        event_data['calendar_id'] = calendar['id']
+                        event_data['server_id'] = server['id']
+                        events.append(event_data)
+        
+                    if events:
+                        days.append({'date': period_start,
+                                     'events': events})
     return days
 
 
