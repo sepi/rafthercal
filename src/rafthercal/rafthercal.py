@@ -8,6 +8,7 @@ from rml.simulate import simulate_print
 from rafthercal.loader import load_plugin_classes
 import config
 
+
 def load_context():
     base_context = {
         'today': date.today(),
@@ -27,6 +28,7 @@ def load_context():
 
     return context
 
+
 def load_main_template():
     jinja_env = Environment(
         loader=ChoiceLoader([FileSystemLoader("templates"),
@@ -39,6 +41,7 @@ def load_main_template():
 
     template = jinja_env.get_template(config.RAFTHERCAL_MAIN_TEMPLATE)
     return template
+
 
 def main():
     context = load_context()
@@ -59,18 +62,26 @@ def main():
         if config.RAFTHERCAL_SIMULATE:
             simulate_print(out_file)
 
+
 def button_loop():
-    from gpiozero import Button
-    button = Button(config.RAFTHERCAL_BUTTON_PIN)
-    wait_message = f"Waiting for button press connected to pin {config.RAFTHERCAL_BUTTON_PIN}"
+    if type(config.RAFTHERCAL_BUTTON_PIN) == int: # Read from GPIO
+        from gpiozero import Button
+        button = Button(config.RAFTHERCAL_BUTTON_PIN)
+        wait_message = f"Waiting for button press connected to pin {config.RAFTHERCAL_BUTTON_PIN}"
+        wait_fn = lambda: button.wait_for_press()
+    else: # Read from keyboard
+        wait_message = f"Waiting <ENTER> button press on keyboard."
+        wait_fn = lambda: type(input()) == str
+
     print(wait_message)
-    while button.wait_for_press():
+    while wait_fn():
         try:
-            print("Printing")
+            print("Fetching data then printing...")
             main()
             print(wait_message)
         except Exception as e:
             print("A problem occured, ignoring: ", e)
+
 
 if __name__ == '__main__':
     main()
