@@ -53,13 +53,13 @@ def main():
         print(rml_str)
     else:
         out_file = config.RAFTHERCAL_SERIAL_DEVICE or sys.stdout
-        if config.RAFTHERCAL_SIMULATE:
+        if config.RAFTHERCAL_SIMULATE_PRINTER:
             import io
             out_file = io.BytesIO()
     
         print_from_str(rml_str, out_file)
     
-        if config.RAFTHERCAL_SIMULATE:
+        if config.RAFTHERCAL_SIMULATE_PRINTER:
             simulate_print(out_file)
 
 
