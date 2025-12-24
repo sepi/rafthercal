@@ -14,31 +14,31 @@ RAFTHERCAL_PLUGIN_CLASSES = [
 OWNER_NAME = "Fooman Barguy"
 OWNER_BIRTHDAY = "1970-01-01"
 
-CALDAV_PLUGIN = {
-    'servers': [
-        {
-            'id': 'mailbox',
-            'url': "https://dav.mailbox.org/caldav/XXXXXXX",
-            'username': "user@mailbox.org",
-            'password': "",
-        }
-    ],
-    'calendars': [
-        {
-            'id': 'main',
-            'server': 'mailbox',
-            'caldav_name': 'Kalender',
-            'days': 4
-        }
-    ],
-    'todos': [
-        {
-            'id': 'main',
-            'server': 'mailbox',
-            'caldav_name': 'Aufgaben',
-        }
-    ]
-}
+CALDAV_SERVERS = [
+    {
+        'id': 'mailbox',
+        'url': "https://dav.mailbox.org/caldav/XXXXXXX",
+        'username': "user@mailbox.org",
+        'password': "",
+    }
+]
+
+CALDAV_CALENDARS = [
+    {
+        'id': 'main',
+        'server': 'mailbox',
+        'caldav_name': 'Kalender',
+        'days': 4
+    }
+]
+
+CALDAV_TODOS = [
+    {
+        'id': 'main',
+        'server': 'mailbox',
+        'caldav_name': 'Aufgaben',
+    }
+]
 
 IMAGE_URL = "https://www.theweather.com/wimages/foto3c0142c5f2f6287ab38d28f989a419d4.png"
 IMAGE_OUTPUT_PATH = "/tmp/weather.png"

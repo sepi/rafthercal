@@ -29,13 +29,13 @@ def get_events(config):
     today = datetime.date.today()
     days = []
     config_expand(config)
-    for server in config.CALDAV_PLUGIN['servers']:
+    for server in config.CALDAV_SERVERS:
         with caldav.DAVClient(url=server['url'],
                               username=server['username'],
                               password=server['password']) as client:
             my_principal = client.principal()
             calendars = my_principal.calendars()
-            for calendar in config.CALDAV_PLUGIN['calendars']:
+            for calendar in config.CALDAV_CALENDARS:
                 if calendar['server'] != server['id']:
                     continue # Only consider calendars on this server
                 calendar_name = calendar['caldav_name']

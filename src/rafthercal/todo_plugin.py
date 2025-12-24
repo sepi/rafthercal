@@ -16,13 +16,13 @@ def get_todos(config):
 
     config_expand(config)
 
-    for server in config.CALDAV_PLUGIN['servers']:
+    for server in config.CALDAV_SERVERS:
         client = caldav.DAVClient(server['url'],
                                   username=server['username'],
                                   password=server['password'])
         principal = client.principal()
 
-        for todo_config in config.CALDAV_PLUGIN['todos']:
+        for todo_config in config.CALDAV_TODOS:
             if todo_config['server'] != server['id']:
                 continue  # Only consider todos on this server
             todo_name = todo_config['caldav_name']
