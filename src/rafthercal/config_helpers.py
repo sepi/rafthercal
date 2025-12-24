@@ -17,3 +17,13 @@ def config_expand(config):
         todo['url'] = server['url']
         todo['username'] = server['username']
         todo['password'] = server['password']
+
+
+def config_template_from_pattern(config, pattern):
+    for tpl in config.RAFTHERCAL_TEMPLATES:
+        if tpl.get('pattern', None) == pattern:
+            return tpl.get('filename', None)
+    for tpl in config.RAFTHERCAL_TEMPLATES:
+        if not tpl.get('pattern', None):
+            return tpl.get('filename', None)
+    return None

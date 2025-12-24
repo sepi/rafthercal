@@ -1,11 +1,13 @@
 import sys
-from  datetime import date, datetime
+from  datetime import date, datetime, timedelta
+import time
 
 from jinja2 import Environment, ChoiceLoader, PackageLoader, FileSystemLoader, select_autoescape
 from rml.rml import print_from_str
 from rml.simulate import simulate_print
 
 from rafthercal.loader import load_plugin_classes
+from rafthercal.config_helpers import config_template_from_pattern
 import config
 
 
@@ -29,7 +31,7 @@ def load_context():
     return context
 
 
-def load_main_template():
+def load_template(filename):
     jinja_env = Environment(
         loader=ChoiceLoader([FileSystemLoader("templates"),
                              PackageLoader("rafthercal", "templates")
@@ -39,13 +41,14 @@ def load_main_template():
         lstrip_blocks=True,
     )
 
-    template = jinja_env.get_template(config.RAFTHERCAL_MAIN_TEMPLATE)
+    template = jinja_env.get_template(filename)
     return template
 
 
-def main():
+def main(template="main.rml"):
+    print(f"Printing template '{template}.'")
     context = load_context()
-    template = load_main_template()
+    template = load_template(template)
 
     rml_str = template.render(context)
     PRINT_RML_ONLY = getattr(config, 'RAFTHERCAL_PRINT_RML_ONLY', False)
@@ -63,24 +66,84 @@ def main():
             simulate_print(out_file)
 
 
+def analyze_sequence(sequence, threshold):
+    "Analyze a sequence of up and down timestamps and return as a list of '.' and '-'."
+    # Convert button down and up timestamps to relative to first button down event times (in seconds).
+    seq_rel = [(s - sequence[0]).total_seconds() for s in sequence]
+
+    # Button press durations
+    durations = [down-up for up, down in zip(seq_rel[::2], seq_rel[1::2])]
+
+    pattern = ['.' if d < threshold else '-' for d in durations]
+    return pattern
+            
+
 def button_loop():
+    button_down = False
+    in_sequence = False
+    sequence_times = []
+
+    def on_press():
+        nonlocal button_down, in_sequence, sequence_times
+        if not button_down:
+            if not in_sequence:
+                in_sequence = True
+            sequence_times.append(datetime.now())
+            button_down = True
+
+    def on_release():
+        nonlocal button_down
+        if button_down:
+            if in_sequence:
+                sequence_times.append(datetime.now())
+            button_down = False
+
+
     if type(config.RAFTHERCAL_BUTTON_PIN) == int: # Read from GPIO
         from gpiozero import Button
         button = Button(config.RAFTHERCAL_BUTTON_PIN)
-        wait_message = f"Waiting for button press connected to pin {config.RAFTHERCAL_BUTTON_PIN}"
-        wait_fn = lambda: button.wait_for_press()
+        button.when_pressed = on_press
+        button.when_released = on_release
+        wait_message = f"Waiting for button press pattern connected to pin {config.RAFTHERCAL_BUTTON_PIN}"
     else: # Read from keyboard
-        wait_message = f"Waiting <ENTER> button press on keyboard."
-        wait_fn = lambda: type(input()) == str
+        from pynput import keyboard
+        wait_message = f"Waiting <ENTER> button press pattern on keyboard."
+
+        def on_kb_press(key):
+            if key == keyboard.Key.enter:
+                on_press()
+
+        def on_kb_release(key):
+            if key == keyboard.Key.enter:
+                on_release()
+
+        listener = keyboard.Listener(
+            on_press=on_kb_press,
+            on_release=on_kb_release
+        )
+        listener.start()
 
     print(wait_message)
-    while wait_fn():
+    while True:
         try:
-            print("Fetching data then printing...")
-            main()
-            print(wait_message)
+            if datetime.now() > sequence_times[-1] + timedelta(seconds=0.55) and not button_down:
+                pattern = analyze_sequence(sequence_times, 0.15)
+                pattern_str = ''.join(pattern)
+                template = config_template_from_pattern(config, pattern_str)
+                if template:
+                    print(f"Detected pattern '{pattern_str}'. Fetching data then printing...")
+                    main(template)
+                    print(wait_message)
+                else:
+                    print("No template found.")
+                sequence_times = []
+                in_sequence = False
+        except IndexError:
+            pass
         except Exception as e:
             print("A problem occured, ignoring: ", e)
+
+        time.sleep(.2)
 
 
 if __name__ == '__main__':

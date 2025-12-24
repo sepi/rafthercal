@@ -1,4 +1,14 @@
-RAFTHERCAL_MAIN_TEMPLATE = "main.rml"
+# Patterns can be composed of '.' and '-'. For example '.-.' means short-long-short.
+RAFTHERCAL_TEMPLATES = [
+    {
+        'pattern': '.',
+        'filename': "main.rml",
+    },
+    {
+        'pattern': None,
+        'filename': "default.rml",
+    },
+]
 RAFTHERCAL_SERIAL_DEVICE = "/dev/ttyS0"
 RAFTHERCAL_BUTTON_PIN = 21
 RAFTHERCAL_SIMULATE_PRINTER = False
@@ -28,7 +38,7 @@ CALDAV_CALENDARS = [
         'id': 'main',
         'server': 'mailbox',
         'caldav_name': 'Kalender',
-        'days': 4
+        'days': 4,
     }
 ]
 
@@ -37,6 +47,7 @@ CALDAV_TODOS = [
         'id': 'main',
         'server': 'mailbox',
         'caldav_name': 'Aufgaben',
+        'days': 4,
     }
 ]
 

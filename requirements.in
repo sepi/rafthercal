@@ -3,4 +3,5 @@ caldav
 rml @ git+https://github.com/sepi/RML
 pillow
 gpiozero
+pynput
 requests
