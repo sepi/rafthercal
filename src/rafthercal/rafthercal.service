@@ -1,0 +1,13 @@
+[Unit]
+Description=Rafthercal User Service
+After=network.target
+
+[Service]
+WorkingDirectory=/home/pi/rafthercal
+ExecStart=/bin/bash -c "source /home/pi/rafthercal/venv/bin/activate && python3 -m rafthercal"
+Restart=always
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
