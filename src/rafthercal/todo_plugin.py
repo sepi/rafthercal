@@ -29,8 +29,9 @@ def get_todos(config):
             calendar = find_calendar(principal.calendars(), todo_name)
         
             # Fetch todos
-            days_back = todo_config['days_back']
-            days_ahead = todo_config['days_ahead']
+            days_back = todo_config.get('days_back', 0)
+            days_ahead = todo_config.get('days_ahead', 7)
+            hide_completed = todo_config.get('hide_completed', True)
             period_start = datetime.combine(today - timedelta(days=days_back), datetime.min.time())
             period_end = datetime.combine(period_start + timedelta(days=days_ahead), datetime.min.time())
             for ics in calendar.search(start=period_start, end=period_end,
@@ -47,6 +48,9 @@ def get_todos(config):
                         if due_datetime_naive > period_end or \
                            due_datetime_naive < period_start:
                             continue
+
+                    if hide_completed and status == 'COMPLETED':
+                        continue
 
                     status = str(status) if status else "UNKNOWN"
                     
