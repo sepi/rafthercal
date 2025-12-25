@@ -101,7 +101,7 @@ def button_loop():
 
     if type(config.RAFTHERCAL_BUTTON_PIN) == int: # Read from GPIO
         from gpiozero import Button
-        button = Button(config.RAFTHERCAL_BUTTON_PIN)
+        button = Button(config.RAFTHERCAL_BUTTON_PIN, bounce_time=0.05) # With software debounce of 50ms
         button.when_pressed = on_press
         button.when_released = on_release
         wait_message = f"Waiting for button press pattern connected to pin {config.RAFTHERCAL_BUTTON_PIN}"
