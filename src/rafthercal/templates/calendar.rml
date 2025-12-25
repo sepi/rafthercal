@@ -1,14 +1,14 @@
 {% if calendar_days %}
-  {% for d in calendar_days %}
-    {% if d.events %}
-{b}{{ d.date.strftime("%a %-d %B") }}{/b}
-      {% for e in d.events %}
-{b}{{ e.summary }}{/b}
-        {% if e.location %}
-@{{ e.location }}
+  {% for day in calendar_days %}
+    {% if day.events %}
+{b}{{ day.date.strftime("%a %-d %B") }}{/b}
+      {% for ev in day.events %}
+{b}{{ ev.summary }}{/b}
+        {% if ev.location %}
+@{{ ev.location }}
         {% endif %}
-        {% if e.description %}
-{i}{{ e.description }}{/i}
+        {% if ev.description %}
+{i}{{ ev.description }}{/i}
         {% endif %}
         {% if not loop.last %}
 {{ line_single }}{% endif %}
