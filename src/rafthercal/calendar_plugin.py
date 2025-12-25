@@ -35,13 +35,13 @@ def get_events(config):
                               password=server['password']) as client:
             my_principal = client.principal()
             calendars = my_principal.calendars()
-            for calendar in config.CALDAV_CALENDARS:
-                if calendar['server'] != server['id']:
+            for calendar_config in config.CALDAV_CALENDARS:
+                if calendar_config['server'] != server['id']:
                     continue # Only consider calendars on this server
-                calendar_name = calendar['caldav_name']
+                calendar_name = calendar_config['caldav_name']
                 c = find_calendar(calendars, calendar_name)
 
-                for offset in range(calendar['days']):
+                for offset in range(calendar_config['days']):
                     period_start = datetime.datetime.combine(today + datetime.timedelta(days=offset),
                                                              datetime.datetime.min.time())
                     period_end = datetime.datetime.combine(period_start + datetime.timedelta(days=1),
@@ -51,8 +51,9 @@ def get_events(config):
                     events = []
                     for event in events_today:
                         event_data = extract_ev(event)
-                        event_data['calendar_id'] = calendar['id']
+                        event_data['calendar_id'] = calendar_config['id']
                         event_data['server_id'] = server['id']
+                        event_data['bullet'] = calendar_config.get('bullet', "»")
                         events.append(event_data)
         
                     if events:

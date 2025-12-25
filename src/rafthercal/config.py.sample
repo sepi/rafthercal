@@ -39,6 +39,7 @@ CALDAV_CALENDARS = [
         'server': 'mailbox',
         'caldav_name': 'Kalender',
         'days': 4,
+        'bullet': "»",
     }
 ]
 

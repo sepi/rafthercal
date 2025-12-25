@@ -3,7 +3,7 @@
     {% if day.events %}
 {b}{{ day.date.strftime("%a %-d %B") }}{/b}
       {% for ev in day.events %}
-{b}{{ ev.summary }}{/b}
+{{ ev.bullet }} {{ ev.summary }}
         {% if ev.location %}
 @{{ ev.location }}
         {% endif %}
