@@ -6,3 +6,8 @@
   {% if not loop.last %}{{ line_single }}
   {% endif %}
 {% endfor %}
+{{ line_single }}
+{b}No due date{/b}
+{% for todo in todos_no_duedate %}
+[{% if todo.completed %}X{% else %} {% endif %}] {{ todo.summary }}
+{% endfor %}
