@@ -1,4 +1,18 @@
-# Patterns can be composed of '.' and '-'. For example '.-.' means short-long-short.
+# This is the serial device that your thermal printer is listening on.
+RAFTHERCAL_SERIAL_DEVICE = "/dev/ttyS0"
+
+# The GPIO pin used to trigger the printer. If the value None is used, the <Enter> key can be used instead.
+RAFTHERCAL_BUTTON_PIN = 21
+
+# If true, instead of printing to the serial port, simulate the printer output and write the console. This mostly makes sense when starting the application manually.
+RAFTHERCAL_SIMULATE_PRINTER = False
+
+# If true, instread of printing to the printer, print the RML output to the console. This mostly makes sense when starting the application manually.
+RAFTHERCAL_PRINT_RML = False
+
+# Button press patterns can be composed of '.' and '-'. For example
+# '.-.' means short-long-short. The associated template defined in
+# 'filename' will be printed if the pattern in 'pattern' is detected.
 RAFTHERCAL_TEMPLATES = [
     {
         'pattern': '.',
@@ -9,10 +23,8 @@ RAFTHERCAL_TEMPLATES = [
         'filename': "default.rml",
     },
 ]
-RAFTHERCAL_SERIAL_DEVICE = "/dev/ttyS0"
-RAFTHERCAL_BUTTON_PIN = 21
-RAFTHERCAL_SIMULATE_PRINTER = False
-RAFTHERCAL_PRINT_RML = False
+
+# A list of plugins that are executed to create the variables for the templates to read.
 RAFTHERCAL_PLUGIN_CLASSES = [
     'system_plugin.SystemPlugin',
     'calendar_plugin.CalendarPlugin',
@@ -21,37 +33,79 @@ RAFTHERCAL_PLUGIN_CLASSES = [
     'image_plugin.ImagePlugin',
 ]
 
+# ----------- Plugins ------------
+
+#
+# Owner plugin (displays the name of the owner and congratulates on
+# birthday)
+#
 OWNER_NAME = "Fooman Barguy"
 OWNER_BIRTHDAY = "1970-01-01"
 
+#
+# Calendar & Todo plugin
+#
+# Variables:
+# - `calendar_days`: Calendar events ordered by days
+# - `todos_duedate`: Todos with duedate sorted by duedate
+# - `todos_no_duedate`: Todos without duedate
+#
+# calendar_days = [
+#   {
+#     'date': date,
+#     'events': {
+#       'description': event description
+#       'dtstart': event start date or time
+#       'dtend': event end date or time
+#       'location': event location
+#       'summary': event summary
+#       'all_day': 'True' if it's an all day event
+#       'bullet': the bullet character in the config
+#       'calendar_id': the id of the calendar in the config
+#       'server_id': the id of the server in the config
+#     }
+#   },
+#   {...},
+# ]
+
+# A list of servers to be used by calendar or todo plugin. 
 CALDAV_SERVERS = [
     {
-        'id': 'mailbox',
-        'url': "https://dav.mailbox.org/caldav/XXXXXXX",
+        'id': 'mailbox', # Use this to reference the server in a calendar or todo config later on.
+        'url': "https://dav.mailbox.org/caldav/XXXXXXX", # The CalDav URL
         'username': "user@mailbox.org",
         'password': "",
     }
 ]
 
+# Each calendar listed here will add events to the `calendar_days`
+# variable.
 CALDAV_CALENDARS = [
     {
         'id': 'main',
-        'server': 'mailbox',
-        'caldav_name': 'Kalender',
-        'days': 4,
-        'bullet': "»",
+        'server': 'mailbox', # References server from CALDAV_SERVERS
+        'caldav_name': 'Kalender', # Name of this calendar in CalDav
+        'days': 4, # How many days to include in the future
+        'bullet': "»", # Can be used in template to differentiate between different calendars
     }
 ]
 
+# Each todo listed here will add events to the `todos_*` variables.
 CALDAV_TODOS = [
     {
         'id': 'main',
-        'server': 'mailbox',
-        'caldav_name': 'Aufgaben',
-        'days': 4,
+        'server': 'mailbox', # References server from CALDAV_SERVERS
+        'caldav_name': 'Aufgaben', # Name of this calendar in CalDav
+        'days': 4, # How many days to include in the future
     }
 ]
 
+#
+# Image plugin
+#
+# This will download an image from an URL, converte it to monochrome,
+# resize and crop it.
+#
 IMAGE_URL = "https://www.theweather.com/wimages/foto3c0142c5f2f6287ab38d28f989a419d4.png"
 IMAGE_OUTPUT_PATH = "/tmp/weather.png"
 #IMAGE_CROP_TOP = 0
