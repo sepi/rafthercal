@@ -47,22 +47,26 @@ def load_template(filename):
 
 def main(template="main.rml"):
     print(f"Printing template '{template}.'")
+    PRINT_RML_ONLY = getattr(config, 'RAFTHERCAL_PRINT_RML_ONLY', False)
+    SIMULATE_PRINTER = getattr(config, 'RAFTHERCAL_SIMULATE_PRINTER', False)
+    if not PRINT_RML_ONLY and not SIMULATE_PRINTER:
+        print_from_str("\n")
+
     context = load_context()
     template = load_template(template)
 
     rml_str = template.render(context)
-    PRINT_RML_ONLY = getattr(config, 'RAFTHERCAL_PRINT_RML_ONLY', False)
     if PRINT_RML_ONLY:
         print(rml_str)
     else:
         out_file = config.RAFTHERCAL_SERIAL_DEVICE or sys.stdout
-        if config.RAFTHERCAL_SIMULATE_PRINTER:
+        if SIMULATE_PRINTER:
             import io
             out_file = io.BytesIO()
     
         print_from_str(rml_str, out_file)
     
-        if config.RAFTHERCAL_SIMULATE_PRINTER:
+        if SIMULATE_PRINTER:
             simulate_print(out_file)
 
 
