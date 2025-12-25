@@ -6,12 +6,14 @@ from rafthercal.plugin import BasePlugin
 from rafthercal.config_helpers import config_expand
 
 def fill_event(component):
+    dtstart = component.get("dtstart").dt
     return {
         'summary': component.get("summary"),
         'description': component.get("description"),
-        'dtstart': component.get("dtstart").dt,
+        'dtstart': dtstart,
         'dtend': component.get("dtend").dt,
         'location': component.get("location"),
+        'all_day': type(dtstart) is datetime.date,
     }
 
 

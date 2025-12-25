@@ -4,15 +4,17 @@
 {b}{{ day.date.strftime("%a %-d %B") }}{/b}
       {% for ev in day.events %}
 {{ ev.bullet }} {{ ev.summary }}
+        {% if ev.dtstart and not ev.all_day %}
+  {{ ev.dtstart.strftime("%-H:%M") }}{% endif %}{% if ev.dtend and not ev.all_day %} - {{ ev.dtend.strftime("%-H:%M") }}
+        {% endif %}
         {% if ev.location %}
-@{{ ev.location }}
+  @{{ ev.location }}
         {% endif %}
         {% if ev.description %}
-{i}{{ ev.description }}{/i}
+  {i}{{ ev.description }}{/i}
         {% endif %}
-        {% if not loop.last %}
-{{ line_single }}{% endif %}
       {% endfor %}
+{{ line_single }}
     {% endif %}
   {% endfor %}
 {% else %}
