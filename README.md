@@ -144,6 +144,8 @@ You can also just include (copy it) into your template using:
 {% include "footer.rml" %}
 ```
 
+Use strftime to format dates and times using format strings documented [here](https://strftime.org/).
+
 ## Implement your own plugins
 
 Create a class `FooPlugin` in a file `foo.py` in the rafthercal directory that inherits from `rafthercal.plugin.BasePlugin` and list it in `RAFTHERCAL_PLUGIN_CLASSES` as `foo.FooPlugin`.  Implement `get_context` and `get_template`.
