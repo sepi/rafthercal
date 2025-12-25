@@ -50,7 +50,7 @@ def main(template="main.rml"):
     PRINT_RML_ONLY = getattr(config, 'RAFTHERCAL_PRINT_RML_ONLY', False)
     SIMULATE_PRINTER = getattr(config, 'RAFTHERCAL_SIMULATE_PRINTER', False)
     if not PRINT_RML_ONLY and not SIMULATE_PRINTER:
-        print_from_str("\n")
+        print_from_str("{feedL 1}")
 
     context = load_context()
     template = load_template(template)
