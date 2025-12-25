@@ -133,8 +133,8 @@ def button_loop():
     print(wait_message)
     while True:
         try:
-            if datetime.now() > sequence_times[-1] + timedelta(seconds=0.55) and not button_down:
-                pattern = analyze_sequence(sequence_times, 0.15)
+            if datetime.now() > sequence_times[-1] + timedelta(seconds=0.65) and not button_down:
+                pattern = analyze_sequence(sequence_times, 0.25)
                 pattern_str = ''.join(pattern)
                 template = config_template_from_pattern(config, pattern_str)
                 if template:
