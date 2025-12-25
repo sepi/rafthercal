@@ -1,2 +1,3 @@
 graft src/rafthercal/templates
 graft scripts
+include src/rafthercal/config.py.sample
