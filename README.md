@@ -6,7 +6,7 @@ like the ones used in cash registers. It is primarily meant to print
 *calendars* and *todo lists* from CalDav online calendars.
 
 The formatting of the printed output is customizable via
-[jinga2](https://jinja.palletsprojects.com/en/stable/templates/)
+[jinja2](https://jinja.palletsprojects.com/en/stable/templates/)
 templates and formatting directives of the [Receipt Markup Language
 (RML)](https://github.com/sepi/RML) are accepted to format and style
 the output.
@@ -113,10 +113,11 @@ name as a pre-installed template, the new one will override the
 installed one.
 
 ### How they work
-The templates use the jinja2 template language. It uses two constructs
-to either do control flow (if-then-else constructs or loops) or
-display the values of variables defined by the plugins like the
-calendar plugin.
+The templates use the
+[jinja2](https://jinja.palletsprojects.com/en/stable/templates/)
+template language. It uses two constructs to either do control flow
+(if-then-else constructs or loops) or display the values of variables
+defined by the plugins like the calendar plugin.
 
 You can conditionally display text using: 
 ```
