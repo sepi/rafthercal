@@ -2,7 +2,7 @@ from rafthercal.plugin import BasePlugin
 
 import caldav
 import icalendar
-from datetime import timezone, timedelta, date, datetime
+from datetime import timezone, timedelta, date, datetime, timezone
 from collections import defaultdict
 
 from .calendar_plugin import find_calendar
@@ -29,9 +29,10 @@ def get_todos(config):
             calendar = find_calendar(principal.calendars(), todo_name)
         
             # Fetch todos
-            days_to_fetch = todo_config['days']
-            period_start = datetime.combine(today, datetime.min.time())
-            period_end = datetime.combine(period_start + timedelta(days=days_to_fetch), datetime.min.time())
+            days_back = todo_config['days_back']
+            days_ahead = todo_config['days_ahead']
+            period_start = datetime.combine(today - timedelta(days=days_back), datetime.min.time())
+            period_end = datetime.combine(period_start + timedelta(days=days_ahead), datetime.min.time())
             for ics in calendar.search(start=period_start, end=period_end,
                                        comp_class=caldav.objects.Todo):
                 todo = next(filter(lambda comp: isinstance(comp, icalendar.cal.Todo),
@@ -39,7 +40,14 @@ def get_todos(config):
                 if todo:
                     status = todo.get('status', None)
                     due_datetime = todo.get('due', None)
-        
+
+                    # Search daterange don't seem to work with comp_class=...
+                    if due_datetime and isinstance(due_datetime.dt, datetime):
+                        due_datetime_naive = due_datetime.dt.replace(tzinfo=None)
+                        if due_datetime_naive > period_end or \
+                           due_datetime_naive < period_start:
+                            continue
+
                     status = str(status) if status else "UNKNOWN"
                     
                     todo_dict = {

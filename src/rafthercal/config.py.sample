@@ -96,7 +96,8 @@ CALDAV_TODOS = [
         'id': 'main',
         'server': 'mailbox', # References server from CALDAV_SERVERS
         'caldav_name': 'Aufgaben', # Name of this calendar in CalDav
-        'days': 4, # How many days to include in the future
+        'days_back': 4, # How many days to include in the past
+        'days_ahead': 4, # How many days to include in the future
     }
 ]
 
