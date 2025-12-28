@@ -20,7 +20,7 @@ dependencies = ["jinja2", "caldav", "rml @ git+https://github.com/sepi/RML",
 Homepage = "https://github.com/sepi/rafthercal"
 
 [tool.setuptools]
-script-files = ["scripts/run-rafthercal", "scripts/update-rafthercal"]
+script-files = ["scripts/run-rafthercal", "scripts/update-rafthercal", "scripts/restart-rafthercal"]
 
 
 
