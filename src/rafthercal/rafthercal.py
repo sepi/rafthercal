@@ -1,6 +1,7 @@
 import sys
 from  datetime import date, datetime, timedelta
 import time
+import traceback
 
 from jinja2 import Environment, ChoiceLoader, PackageLoader, FileSystemLoader, select_autoescape
 from rml.rml import print_from_str
@@ -147,8 +148,8 @@ def button_loop():
                 in_sequence = False
         except IndexError:
             pass
-        except Exception as e:
-            print("A problem occured, ignoring: ", e)
+        except Exception:
+            print("A problem occured, ignoring: ", traceback.format_exc())
 
         time.sleep(.2)
 
