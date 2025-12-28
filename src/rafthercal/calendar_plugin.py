@@ -29,7 +29,7 @@ def find_calendar(cals, name):
 
 def get_events(config):
     today = datetime.date.today()
-    days = []
+    events_dict = {}
     config_expand(config)
     for server in config.CALDAV_SERVERS:
         with caldav.DAVClient(url=server['url'],
@@ -59,8 +59,13 @@ def get_events(config):
                         events.append(event_data)
         
                     if events:
-                        days.append({'date': period_start,
-                                     'events': events})
+                        if period_start in events_dict:
+                            events_dict[period_start] += events
+                        else:
+                            events_dict[period_start] = events
+    days = []
+    for date, events in sorted(events_dict.items(), key=lambda kv: kv[0]):
+        days.append({'date': date, 'events': events})
     return days
 
 
