@@ -7,11 +7,14 @@ from rafthercal.config_helpers import config_expand
 
 def fill_event(component):
     dtstart = component.get("dtstart").dt
+    dtend = component.get("dtend").dt
     return {
         'summary': component.get("summary"),
         'description': component.get("description"),
         'dtstart': dtstart,
-        'dtend': component.get("dtend").dt,
+        'dtstart_datetime': date_as_datetime(dtstart),
+        'dtend': dtend,
+        'dtend_datetime': date_as_datetime(dtend),
         'location': component.get("location"),
         'all_day': type(dtstart) is datetime.date,
     }
@@ -25,6 +28,14 @@ def extract_ev(event):
 
 def find_calendar(cals, name):
     return list(filter(lambda c: c.name == name, cals))[0]
+
+
+def date_as_datetime(d):
+    if isinstance(d, datetime.datetime):
+        return d
+    else: # Should be a datetime.date
+        return datetime.datetime.combine(d, datetime.datetime.min.time()) \
+                                .replace(tzinfo=datetime.timezone.utc) # FIXME: This is a bug. It should be put into local timezone, or timzeon the calendar times come in.
 
 
 def get_events(config):
@@ -65,7 +76,8 @@ def get_events(config):
                             events_dict[period_start] = events
     days = []
     for date, events in sorted(events_dict.items(), key=lambda kv: kv[0]):
-        days.append({'date': date, 'events': events})
+        events_sorted = sorted(events, key=lambda e: e['dtstart_datetime'])
+        days.append({'date': date, 'events': events_sorted})
     return days
 
 
