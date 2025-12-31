@@ -1,4 +1,4 @@
-{% if todos_duedate or todos_no_duedate %}
+{% if todos_duedate %}
   {% for day in todos_duedate %}
 {b}{{ day.date.strftime("%a %-d %B") }}{/b}
     {% for todo in day.todos %}
@@ -7,11 +7,16 @@
     {% if not loop.last %}{{ line_single }}
     {% endif %}
   {% endfor %}
+{% endif %}
+{% if todos_duedate and todos_no_duedate %}
 {{ line_single }}
-{b}No due date{/b}
+{% endif %}
+{% if todos_no_duedate %}
+{b}Todo no due date{/b}
   {% for todo in todos_no_duedate %}
 [{% if todo.completed %}X{% else %} {% endif %}] {{ todo.summary }}
   {% endfor %}
-{% else %}
-No todos
+{% endif %}
+{% if not todos_duedate and not todos_no_duedate %}
+{b}No todos.{/b}
 {% endif %}

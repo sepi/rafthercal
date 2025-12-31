@@ -14,9 +14,13 @@
   {i}{{ ev.description }}{/i}
         {% endif %}
       {% endfor %}
+{% if not loop.last %}
 {{ line_single }}
+{% endif %}
+    {% else %}
+  No events.
     {% endif %}
   {% endfor %}
 {% else %}
-No calendar events
+No calendar events. Enjoy!
 {% endif %}

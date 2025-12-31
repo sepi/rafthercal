@@ -35,7 +35,7 @@ def date_as_datetime(d):
         return d
     else: # Should be a datetime.date
         return datetime.datetime.combine(d, datetime.datetime.min.time()) \
-                                .replace(tzinfo=datetime.timezone.utc) # FIXME: This is a bug. It should be put into local timezone, or timzeon the calendar times come in.
+                                .replace(tzinfo=datetime.timezone.utc) # FIXME: This is a bug. It should be put into local timezone, or timezone the calendar times come in.
 
 
 def get_events(config):

@@ -4,15 +4,11 @@
 {% block content %}
 {% include "header.rml" %}
 {{ line_double }}
-
 {% include "calendar.rml" %}
 {{ line_double }}
-
 {% include "todo.rml" %}
 {{ line_double }}
-
 {{ image }}
 {{ line_double }}
-
 {% include "footer.rml" %}
 {% endblock %}
