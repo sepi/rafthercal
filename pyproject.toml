@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rafthercal"
-version = "0.11.5"
+version = "0.11.6"
 authors = [
   { name="Raffael Mancini", email="raffael@mancini.lu" },
 ]
@@ -21,10 +21,3 @@ Homepage = "https://github.com/sepi/rafthercal"
 
 [tool.setuptools]
 script-files = ["scripts/run-rafthercal", "scripts/update-rafthercal", "scripts/restart-rafthercal"]
-
-
-
-
-
-
-
