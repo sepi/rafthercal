@@ -1,0 +1,5 @@
+/src/rafthercal/__pycache__/
+/src/rafthercal.egg-info/
+/build/
+/dist/
+*.pyc

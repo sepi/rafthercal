@@ -5,3 +5,4 @@ pillow
 gpiozero
 pynput
 requests
+flask
