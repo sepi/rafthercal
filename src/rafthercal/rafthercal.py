@@ -21,7 +21,7 @@ def load_context():
         'line_double': "═" * 32,
     }
 
-    plugin_classes = load_plugin_classes()
+    plugin_classes = load_plugin_classes(config)
     context = base_context
     for klass in plugin_classes.values():
         plugin = klass(config)

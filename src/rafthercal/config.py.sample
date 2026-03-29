@@ -24,14 +24,10 @@ RAFTHERCAL_TEMPLATES = [
     },
 ]
 
-# A list of plugins that are executed to create the variables for the templates to read.
-RAFTHERCAL_PLUGIN_CLASSES = [
-    'system_plugin.SystemPlugin',
-    'calendar_plugin.CalendarPlugin',
-    'rafthercal.todo_plugin.TodoPlugin',
-    'owner_plugin.OwnerPlugin',
-    'image_plugin.ImagePlugin',
-]
+# Optional path to a directory containing additional plugins.
+# Any file matching *_plugin.py with a corresponding *Plugin class will be loaded automatically.
+# Built-in plugins are always loaded from the package.
+#RAFTHERCAL_PLUGIN_DIR = "/path/to/custom/plugins"
 
 # ----------- Plugins ------------
 
