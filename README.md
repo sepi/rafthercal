@@ -64,15 +64,27 @@ http://<your-pi-hostname-or-ip>:5000
 From there you can edit `config.py` and all templates directly in the browser.
 Use the **Restart service** button to apply changes.
 
-To enable basic auth on the web UI, set environment variables in
-`~/.config/systemd/user/rafthercal-web.service`:
+The web UI is configured entirely via environment variables, making it easy
+to override with systemd drop-in files in `~/.config/systemd/user/rafthercal-web.service.d/`:
+
+| Variable | Description | Default |
+|---|---|---|
+| `RAFTHERCAL_CONFIG_DIR` | Directory containing `config.py` and local `templates/` | current working directory |
+| `WEB_USERNAME` | Basic auth username (auth disabled if unset) | — |
+| `WEB_PASSWORD` | Basic auth password (auth disabled if unset) | — |
+
+Example drop-in (`~/.config/systemd/user/rafthercal-web.service.d/local.conf`):
 
 ```ini
+[Service]
+Environment=RAFTHERCAL_CONFIG_DIR=/home/pi/rafthercal
 Environment=WEB_USERNAME=admin
 Environment=WEB_PASSWORD=secret
 ```
 
-Then reload and restart: `systemctl --user daemon-reload && systemctl --user restart rafthercal-web`
+After editing: `systemctl --user daemon-reload && systemctl --user restart rafthercal-web`
+
+The `--config-dir` command-line flag takes precedence over `RAFTHERCAL_CONFIG_DIR` if both are set.
 
 ### Manual configuration
 

@@ -5,6 +5,7 @@ After=network.target
 [Service]
 WorkingDirectory=/home/pi/rafthercal
 ExecStart=/home/pi/rafthercal/venv/bin/python3 /home/pi/rafthercal/web_config.py
+Environment=RAFTHERCAL_CONFIG_DIR=/home/pi/rafthercal
 Restart=always
 StandardOutput=journal
 StandardError=journal
