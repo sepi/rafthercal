@@ -1,0 +1,50 @@
+#!/bin/sh
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+BASE_DIR="$(dirname "$SCRIPT_DIR")"
+VENV="$BASE_DIR/venv"
+SYSTEMD_DIR="$HOME/.config/systemd/user"
+
+# ---------------------------------------------------------------------------
+# 1. Create venv and install pip-tools
+# ---------------------------------------------------------------------------
+if [ ! -d "$VENV" ]; then
+    python3 -m venv "$VENV"
+fi
+
+"$VENV/bin/pip" install --quiet --upgrade pip
+"$VENV/bin/pip" install --quiet pip-tools
+
+# ---------------------------------------------------------------------------
+# 2. Sync dependencies via pip-sync
+# ---------------------------------------------------------------------------
+"$VENV/bin/pip-sync" "$BASE_DIR/requirements.txt"
+
+# ---------------------------------------------------------------------------
+# 3. Install systemd user units
+# ---------------------------------------------------------------------------
+mkdir -p "$SYSTEMD_DIR"
+
+sed "s|/home/pi/rafthercal|$BASE_DIR|g" \
+    "$BASE_DIR/src/rafthercal/rafthercal.service" \
+    > "$SYSTEMD_DIR/rafthercal.service"
+
+sed "s|/home/pi/rafthercal|$BASE_DIR|g" \
+    "$BASE_DIR/src/rafthercal/rafthercal-web.service" \
+    > "$SYSTEMD_DIR/rafthercal-web.service"
+
+systemctl --user daemon-reload
+
+# ---------------------------------------------------------------------------
+# 4. Enable and start both units
+# ---------------------------------------------------------------------------
+systemctl --user enable --now rafthercal.service
+systemctl --user enable --now rafthercal-web.service
+
+echo ""
+echo "Done."
+echo "  rafthercal:     $(systemctl --user is-active rafthercal.service)"
+echo "  rafthercal-web: $(systemctl --user is-active rafthercal-web.service)"
+echo ""
+echo "Web UI: http://$(hostname -I | awk '{print $1}'):5000"
