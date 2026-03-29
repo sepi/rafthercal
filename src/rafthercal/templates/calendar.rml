@@ -1,5 +1,5 @@
-{% if calendar_days %}
-  {% for day in calendar_days %}
+{% if calendar.days %}
+  {% for day in calendar.days %}
     {% if day.events %}
 {b}{{ day.date.strftime("%a %-d %B") }}{/b}
       {% for ev in day.events %}

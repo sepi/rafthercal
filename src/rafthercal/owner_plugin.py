@@ -12,7 +12,7 @@ class OwnerPlugin(BasePlugin):
            birthday.day == date.today().day:
             birthday_today = True
         return {
-            'owner_name': c.OWNER_NAME,
-            'owner_birthday': birthday,
-            'owner_birthday_today': birthday_today,
+            'name': c.OWNER_NAME,
+            'birthday': birthday,
+            'birthday_today': birthday_today,
         }

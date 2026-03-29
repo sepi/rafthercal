@@ -1,4 +1,4 @@
-{style tall}{b}{{ owner_name }}{/b} on {{ today }}{style}
-{% if owner_birthday_today %}
+{style tall}{b}{{ owner.name }}{/b} on {{ today }}{style}
+{% if owner.birthday_today %}
 {center}\o/ HAPPY BIRTHDAY! \o/{left}
 {% endif %}

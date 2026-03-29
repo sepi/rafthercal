@@ -226,7 +226,7 @@ def edit_file(file_id):
     path = files[file_id]
 
     if request.method == "POST":
-        content = request.form.get("content", "")
+        content = request.form.get("content", "").replace("\r\n", "\n").replace("\r", "\n")
         try:
             path.write_text(content, encoding="utf-8")
             flash("Saved.", "ok")

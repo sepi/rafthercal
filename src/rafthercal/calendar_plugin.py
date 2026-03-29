@@ -84,5 +84,5 @@ def get_events(config):
 class CalendarPlugin(BasePlugin):
     def get_context(self):
         return {
-            'calendar_days': get_events(self.get_config())
+            'days': get_events(self.get_config())
         }

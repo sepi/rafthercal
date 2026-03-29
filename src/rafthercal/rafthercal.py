@@ -22,12 +22,10 @@ def load_context():
     }
 
     plugin_classes = load_plugin_classes()
-    plugins = [klass(config) for _, klass in plugin_classes.items()]
-
-    # Collect contexts from all plugins
     context = base_context
-    for p in plugins:
-        context.update(p.get_context())
+    for klass in plugin_classes.values():
+        plugin = klass(config)
+        context[plugin.context_name()] = plugin
 
     return context
 

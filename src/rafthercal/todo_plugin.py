@@ -86,6 +86,6 @@ class TodoPlugin(BasePlugin):
         todo_days_dict, todos_noday = get_todos(self.get_config())
         todo_days = [{'date': date, 'todos': todos} for date, todos in todo_days_dict.items()]
         return {
-            'todos_duedate': sorted(todo_days, key=lambda x: x['date']),
-            'todos_no_duedate': todos_noday,
+            'duedate': sorted(todo_days, key=lambda x: x['date']),
+            'no_duedate': todos_noday,
         }
