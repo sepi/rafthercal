@@ -4,33 +4,46 @@
 #
 #    pip-compile
 #
-caldav==1.4.0
+caldav==3.1.0
     # via -r requirements.in
 certifi==2025.1.31
     # via requests
 charset-normalizer==3.4.1
-    # via requests
+    # via
+    #   niquests
+    #   requests
 click==8.1.8
     # via x-wr-timezone
 colorzero==2.0
     # via gpiozero
+dnspython==2.8.0
+    # via caldav
 evdev==1.9.2
     # via pynput
 gpiozero==2.0.1
     # via -r requirements.in
+h11==0.16.0
+    # via urllib3-future
 icalendar==6.1.1
     # via
     #   caldav
+    #   icalendar-searcher
     #   recurring-ical-events
     #   x-wr-timezone
+icalendar-searcher==1.0.5
+    # via caldav
 idna==3.10
     # via requests
+jh2==5.0.11
+    # via urllib3-future
 jinja2==3.1.5
     # via -r requirements.in
 lxml==5.3.1
     # via caldav
 markupsafe==3.0.2
     # via jinja2
+niquests==3.18.4
+    # via caldav
 pillow==11.1.0
     # via
     #   -r requirements.in
@@ -41,19 +54,21 @@ pyserial==3.5
     # via rml
 python-dateutil==2.9.0.post0
     # via
+    #   caldav
     #   icalendar
     #   recurring-ical-events
-    #   vobject
 python-xlib==0.33
     # via pynput
-pytz==2025.1
-    # via vobject
-recurring-ical-events==3.5.2
+pyyaml==6.0.3
     # via caldav
-requests==2.32.3
+qh3==1.7.1
+    # via urllib3-future
+recurring-ical-events==3.8.1
     # via
-    #   -r requirements.in
     #   caldav
+    #   icalendar-searcher
+requests==2.32.3
+    # via -r requirements.in
 rml @ git+https://github.com/sepi/RML
     # via -r requirements.in
 six==1.17.0
@@ -61,7 +76,6 @@ six==1.17.0
     #   pynput
     #   python-dateutil
     #   python-xlib
-    #   vobject
 tzdata==2025.1
     # via
     #   icalendar
@@ -69,8 +83,10 @@ tzdata==2025.1
     #   x-wr-timezone
 urllib3==2.3.0
     # via requests
-vobject==0.9.9
-    # via caldav
+urllib3-future==2.19.902
+    # via niquests
+wassima==2.0.5
+    # via niquests
 x-wr-timezone==2.0.1
     # via recurring-ical-events
 

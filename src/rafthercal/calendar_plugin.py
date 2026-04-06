@@ -21,9 +21,7 @@ def fill_event(component):
 
 
 def extract_ev(event):
-    for component in event.icalendar_instance.walk():
-        if component.name == "VEVENT":
-            return fill_event(component)
+    return fill_event(event.get_icalendar_component())
 
 
 def find_calendar(cals, name):
@@ -59,7 +57,7 @@ def get_events(config):
                                                              datetime.datetime.min.time())
                     period_end = datetime.datetime.combine(period_start + datetime.timedelta(days=1),
                                                            datetime.datetime.min.time())
-                    events_today = c.date_search(start=period_start, end=period_end)
+                    events_today = c.search(start=period_start, end=period_end, event=True)
         
                     events = []
                     for event in events_today:

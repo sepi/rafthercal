@@ -1,5 +1,5 @@
 jinja2
-caldav
+caldav>=3.0
 rml @ git+https://github.com/sepi/RML
 pillow
 gpiozero
